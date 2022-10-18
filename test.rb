@@ -3,7 +3,12 @@
 require_relative "./lib/binary_search_tree"
 
 data = []
-100.times { data << rand(100) }
+20.times { data << rand(20) }
 
 tree = Tree.new(data)
+tree.pretty_print
+
+tree.insert(20)
+tree.pretty_print
+tree.insert(15)
 tree.pretty_print

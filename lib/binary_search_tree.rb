@@ -18,6 +18,19 @@ class Tree
     tree_root
   end
 
+  def insert(value, current_node = @root)
+    return Node.new(value) if current_node.nil?
+
+    return current_node if value == current_node.data
+
+    if value < current_node.data
+      current_node.left_child = insert(value, current_node.left_child)
+    else
+      current_node.right_child = insert(value, current_node.right_child)
+    end
+    current_node
+  end
+
   def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right_child,
                  "#{prefix}#{is_left ? '│   ' : '    '}",
