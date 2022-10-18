@@ -10,8 +10,7 @@ class Tree
   def build_tree(arr)
     return if arr.empty?
 
-    end_i = arr.length - 1
-    mid_i = end_i / 2
+    mid_i = (arr.length - 1) / 2
 
     tree_root = Node.new(arr[mid_i])
     tree_root.left_child = build_tree(arr[0...mid_i])
@@ -19,7 +18,7 @@ class Tree
     tree_root
   end
 
-  def pretty_print(node = @root, prefix = '', is_left = true)
+  def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right_child,
                  "#{prefix}#{is_left ? '│   ' : '    '}",
                  false) if node.right_child
