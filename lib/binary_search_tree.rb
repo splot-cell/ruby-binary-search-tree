@@ -12,9 +12,17 @@ class Tree
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
-    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    pretty_print(node.right_child,
+                 "#{prefix}#{is_left ? '│   ' : '    '}",
+                 false)
+                 if node.right_child
+
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
-    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+
+    pretty_print(node.left_child,
+                 "#{prefix}#{is_left ? '    ' : '│   '}",
+                true)
+                if node.left_child
   end
 end
 
