@@ -6,4 +6,4 @@ data = []
 100.times { data << rand(100) }
 
 tree = Tree.new(data)
-# tree.pretty_print
+tree.pretty_print
