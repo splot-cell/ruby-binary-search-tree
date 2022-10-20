@@ -48,8 +48,12 @@ class Tree
         return current_node.right_child
       when 2
         root_replacement = current_node.right_child.lowest_child_recur
+        # Only replacing the data in current_node with that of the node to be
+        # deleted saves replacing left_child and right_child (i.e. saves one
+        # assignment)
         current_node.data = root_replacement.data
-        current_node.right_child = delete(root_replacement.data, current_node.right_child)
+        current_node.right_child = delete(root_replacement.data,
+                                          current_node.right_child)
 
         return current_node
       end
@@ -58,18 +62,19 @@ class Tree
     current_node
   end
 
-  def pretty_print(node = @root, prefix = "", is_left = true)
-    pretty_print(node.right_child,
-                 "#{prefix}#{is_left ? '│   ' : '    '}",
-                 false) if node.right_child
-
+  def pretty_print(node = @root, prefix = "", is_left: true)
+    if node.right_child
+      pretty_print(node.right_child,
+                   "#{prefix}#{is_left ? '│   ' : '    '}",
+                   false)
+    end
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    return unless node.left_child
 
     pretty_print(node.left_child,
                  "#{prefix}#{is_left ? '    ' : '│   '}",
-                true) if node.left_child
+                 true)
   end
-
 end
 
 class Node

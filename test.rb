@@ -13,9 +13,9 @@ tree.pretty_print
 tree.insert(15)
 tree.pretty_print
 
-tree.delete(20)
+tree = tree.delete(20)
 tree.pretty_print
-tree.delete(9)
-tree.delete(10)
-tree.delete(11)
+tree = tree.delete(9)
+tree = tree.delete(10)
+tree = tree.delete(11)
 tree.pretty_print
