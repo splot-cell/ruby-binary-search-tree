@@ -31,6 +31,33 @@ class Tree
     current_node
   end
 
+  def delete(value, current_node = @root)
+    return if current_node.nil?
+
+    if value < current_node.data
+      current_node.left_child = delete(value, current_node.left_child)
+    elsif value > current_node.data
+      current_node.right_child = delete(value, current_node.right_child)
+    else
+      case current_node.num_children
+      when 0
+        return
+      when 1
+        return current_node.left_child if current_node.left_child
+
+        return current_node.right_child
+      when 2
+        root_replacement = current_node.right_child.lowest_child_recur
+        current_node.data = root_replacement.data
+        current_node.right_child = delete(root_replacement.data, current_node.right_child)
+
+        return current_node
+      end
+    end
+
+    current_node
+  end
+
   def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right_child,
                  "#{prefix}#{is_left ? '│   ' : '    '}",
@@ -42,6 +69,7 @@ class Tree
                  "#{prefix}#{is_left ? '    ' : '│   '}",
                 true) if node.left_child
   end
+
 end
 
 class Node
@@ -56,5 +84,17 @@ class Node
 
   def <=>(other)
     @data <=> other.data
+  end
+
+  def num_children
+    n = 0
+    n += 1 unless left_child.nil?
+    n += 1 unless right_child.nil?
+    n
+  end
+
+  def lowest_child_recur
+    return self if left_child.nil?
+    left_child.lowest_child_recur
   end
 end
