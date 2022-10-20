@@ -39,26 +39,21 @@ class Tree
     elsif value > current_node.data
       current_node.right_child = delete(value, current_node.right_child)
     else
-      case current_node.num_children
-      when 0
-        return
-      when 1
-        return current_node.left_child if current_node.left_child
+      # If current node has zero children, or only a right child
+      return current_node.right_child if current_node.left_child.nil?
 
-        return current_node.right_child
-      when 2
-        root_replacement = current_node.right_child.lowest_child_recur
-        # Only replacing the data in current_node with that of the node to be
-        # deleted saves replacing left_child and right_child (i.e. saves one
-        # assignment)
-        current_node.data = root_replacement.data
-        current_node.right_child = delete(root_replacement.data,
-                                          current_node.right_child)
+      # If current node has only a left child
+      return current_node.left_child if current_node.right_child.nil?
 
-        return current_node
-      end
+      # If current node has 2 children
+      root_replacement = current_node.right_child.lowest_child_recur
+      # Only replacing the data in current_node with that of the node to be
+      # deleted saves replacing left_child and right_child (i.e. saves one
+      # assignment) vs actually moving the Node object up the Tree
+      current_node.data = root_replacement.data
+      current_node.right_child = delete(root_replacement.data,
+                                        current_node.right_child)
     end
-
     current_node
   end
 
