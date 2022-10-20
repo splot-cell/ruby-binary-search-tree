@@ -57,7 +57,7 @@ class Tree
     current_node
   end
 
-  def pretty_print(node = @root, prefix = "", is_left: true)
+  def pretty_print(node = @root, prefix = "", is_left = true)
     if node.right_child
       pretty_print(node.right_child,
                    "#{prefix}#{is_left ? '│   ' : '    '}",
@@ -95,6 +95,7 @@ class Node
 
   def lowest_child_recur
     return self if left_child.nil?
+
     left_child.lowest_child_recur
   end
 end
