@@ -31,30 +31,8 @@ class Tree
     current_node
   end
 
-  def delete(value, current_node = @root)
-    return if current_node.nil?
-
-    if value < current_node.data
-      current_node.left_child = delete(value, current_node.left_child)
-    elsif value > current_node.data
-      current_node.right_child = delete(value, current_node.right_child)
-    else
-      # If current node has zero children, or only a right child
-      return current_node.right_child if current_node.left_child.nil?
-
-      # If current node has only a left child
-      return current_node.left_child if current_node.right_child.nil?
-
-      # If current node has 2 children
-      root_replacement = current_node.right_child.lowest_child_recur
-      # Only replacing the data in current_node with that of the node to be
-      # deleted saves replacing left_child and right_child (i.e. saves one
-      # assignment) vs actually moving the Node object up the Tree
-      current_node.data = root_replacement.data
-      current_node.right_child = delete(root_replacement.data,
-                                        current_node.right_child)
-    end
-    current_node
+  def delete(value)
+    @root = delete_node(value)
   end
 
   def pretty_print(node = @root, prefix = "", is_left = true)
@@ -69,6 +47,34 @@ class Tree
     pretty_print(node.left_child,
                  "#{prefix}#{is_left ? '    ' : '│   '}",
                  true)
+  end
+
+  private
+
+  def delete_node(value, current_node = @root)
+    return if current_node.nil?
+
+    if value < current_node.data
+      current_node.left_child = delete_node(value, current_node.left_child)
+    elsif value > current_node.data
+      current_node.right_child = delete_node(value, current_node.right_child)
+    else
+      # If current node has zero children, or only a right child
+      return current_node.right_child if current_node.left_child.nil?
+
+      # If current node has only a left child
+      return current_node.left_child if current_node.right_child.nil?
+
+      # If current node has 2 children
+      root_replacement = current_node.right_child.lowest_child_recur
+      # Only replacing the data in current_node with that of the node to be
+      # deleted saves replacing left_child and right_child (i.e. saves one
+      # assignment) vs actually moving the Node object up the Tree
+      current_node.data = root_replacement.data
+      current_node.right_child = delete_node(root_replacement.data,
+                                        current_node.right_child)
+    end
+    current_node
   end
 end
 
