@@ -19,3 +19,6 @@ tree.delete(9)
 tree.delete(10)
 tree.delete(11)
 tree.pretty_print
+
+puts tree.find(9).to_s
+puts tree.find(12).to_s
