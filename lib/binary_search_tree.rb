@@ -59,6 +59,23 @@ class Tree
     find(value, current_node.right_child)
   end
 
+  def level_order
+    queue = []
+    values = []
+    current_node = @root
+    until current_node.nil?
+      queue.push(current_node.left_child) unless current_node.left_child.nil?
+      queue.push(current_node.right_child) unless current_node.right_child.nil?
+      if block_given?
+        yield(current_node)
+      else
+        values.push(current_node.data)
+      end
+      current_node = queue.shift
+    end
+    values
+  end
+
   private
 
   def delete_node(value, current_node = @root)
