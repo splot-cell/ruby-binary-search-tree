@@ -49,6 +49,16 @@ class Tree
                  true)
   end
 
+  def find(value, current_node = @root)
+    return if current_node.nil?
+
+    return current_node if value == current_node.data
+
+    return find(value, current_node.left_child) if value < current_node.data
+
+    find(value, current_node.right_child)
+  end
+
   private
 
   def delete_node(value, current_node = @root)
