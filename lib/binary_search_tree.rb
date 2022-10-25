@@ -114,4 +114,8 @@ class Node
 
     left_child.lowest_child_recur
   end
+
+  def to_s
+    "Node with data: #{@data}"
+  end
 end
