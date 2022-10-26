@@ -172,6 +172,11 @@ class Tree
     true
   end
 
+  def rebalance
+    arr = inorder
+    @root = build_tree(arr)
+  end
+
   private
 
   # Helper function to compare subtree height
