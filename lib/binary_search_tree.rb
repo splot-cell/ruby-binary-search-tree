@@ -90,12 +90,21 @@ class Tree
     values
   end
 
-  def inorder(current_node = @root, &block)
-    return []
+  def inorder(node = @root, &block)
+    return if node.nil?
 
+    values = []
+    values << inorder(node.left_child, &block) unless node.left_child.nil?
+    values << traverse(node, &block)
+    values << inorder(node.right_child, &block) unless node.right_child.nil?
+    return values.flatten unless block_given?
   end
 
   private
+
+  def traverse(node, &block)
+    block_given? ? block.call(node) : node.data
+  end
 
   def delete_node(value, current_node = @root)
     return if current_node.nil?
