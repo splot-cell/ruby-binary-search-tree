@@ -129,6 +129,21 @@ class Tree
     return values.flatten unless block_given?
   end
 
+  # Height is number of edges in longest path from a node to a leaf node
+  def height(node)
+    # Guard against nil nodes and leaf nodes
+    return if node.nil?
+
+    return 0 if node.num_children.zero?
+
+    # Find the max height of any children
+    l_height = node.left_child.nil? ? 0 : height(node.left_child)
+    r_height = node.right_child.nil? ? 0 : height(node.right_child)
+    max = l_height > r_height ? l_height : r_height
+    # Return the max height plus one
+    max + 1
+  end
+
   private
 
   # Helper function for handing traversal behaviour when no block given
