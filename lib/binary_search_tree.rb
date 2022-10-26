@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+# Binary search tree class made up of Node objects
 class Tree
   attr_accessor :root
 
+  # Builds a balanced tree from an array
   def initialize(arr)
     @root = build_tree(arr.uniq.sort)
   end
 
+  # Builds a balanced tree from a sorted array
   def build_tree(arr)
     return if arr.empty?
 
@@ -18,6 +21,7 @@ class Tree
     tree_root
   end
 
+  # node parameter is for recursive functionality only
   def insert(value, node = @root)
     return Node.new(value) if node.nil?
 
@@ -31,10 +35,13 @@ class Tree
     node
   end
 
+  # Delete interface is separate from delete_node function to avoid bug when
+  # delete is called on the value stored at @root.
   def delete(value)
     @root = delete_node(value)
   end
 
+  # pretty_print provided by another learner at The Odin Project
   def pretty_print(node = @root, prefix = "", is_left = true)
     if node.right_child
       pretty_print(node.right_child,
@@ -49,6 +56,7 @@ class Tree
                  true)
   end
 
+  # node parameter is for recursive functionality only
   def find(value, node = @root)
     return if node.nil?
 
@@ -59,6 +67,7 @@ class Tree
     find(value, node.right_child)
   end
 
+  # Tree traversal: breadth first
   def level_order(&block)
     queue = []
     values = []
@@ -72,6 +81,7 @@ class Tree
     values unless block_given?
   end
 
+  # Tree traversal: breadth first, but through recursive implementation
   def level_order_rec(queue = [@root], &block)
     return [] if queue.empty?
 
@@ -86,6 +96,7 @@ class Tree
     values.flatten unless block_given?
   end
 
+  # Tree traversal: depth first <left child> <root> <right child>
   def inorder(node = @root, &block)
     return if node.nil?
 
@@ -96,6 +107,7 @@ class Tree
     return values.flatten unless block_given?
   end
 
+  # Tree traversal: depth first <root> <left_child> <right_child>
   def preorder(node = @root, &block)
     return if node.nil?
 
@@ -106,6 +118,7 @@ class Tree
     return values.flatten unless block_given?
   end
 
+  # Tree traversal: depth first <left_child> <right_child> <root>
   def postorder(node = @root, &block)
     return if node.nil?
 
@@ -118,10 +131,13 @@ class Tree
 
   private
 
+  # Helper function for handing traversal behaviour when no block given
   def traverse(node, &block)
     block_given? ? block.call(node) : node.data
   end
 
+  # Recursive delete function, returns root of new tree after value is removed
+  # node parameter is for recursive functionality only
   def delete_node(value, node = @root)
     return if node.nil?
 
@@ -148,6 +164,7 @@ class Tree
   end
 end
 
+# Basic class for storing an integer as part of a BST
 class Node
   include Comparable
   attr_accessor :data, :left_child, :right_child
@@ -158,6 +175,7 @@ class Node
     right_child = nil
   end
 
+  # Makes nodes comparable to each other, as specified on the project assignment
   def <=>(other)
     @data <=> other.data
   end
@@ -169,6 +187,8 @@ class Node
     n
   end
 
+  # Finds the "offspring" node with the lowest value. I.e. recursively finds the
+  # child's child... with the lowest value
   def lowest_child_recur
     return self if left_child.nil?
 
