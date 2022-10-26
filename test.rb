@@ -10,11 +10,13 @@ tree.pretty_print
 
 tree.insert(20)
 tree.pretty_print
-tree.insert(15)
+tree.insert(21)
 tree.pretty_print
+puts tree.balanced?
 
 tree.delete(20)
 tree.pretty_print
+puts tree.balanced?
 # tree.delete(9)
 # tree.delete(10)
 # tree.delete(11)

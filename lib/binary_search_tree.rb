@@ -163,7 +163,26 @@ class Tree
     count + depth(node, current_node.right_child)
   end
 
+  # A balanced tree has a difference in heights between left subtree and right
+  # subtree of max 1 for every node
+  def balanced?
+    level_order do |n|
+      return false unless node_balanced?(n)
+    end
+    true
+  end
+
   private
+
+  # Helper function to compare subtree height
+  def node_balanced?(node)
+    return true if node.num_children.zero?
+
+    l_height = node.left_child.nil? ? 0 : height(node.left_child)
+    r_height = node.right_child.nil? ? 0 : height(node.right_child)
+
+    (l_height - r_height).abs <= 1
+  end
 
   # Helper function for handing traversal behaviour when no block given
   def traverse(node, &block)
