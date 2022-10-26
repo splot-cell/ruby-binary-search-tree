@@ -96,6 +96,26 @@ class Tree
     return values.flatten unless block_given?
   end
 
+  def preorder(node = @root, &block)
+    return if node.nil?
+
+    values = []
+    values << traverse(node, &block)
+    values << preorder(node.left_child, &block) unless node.left_child.nil?
+    values << preorder(node.right_child, &block) unless node.right_child.nil?
+    return values.flatten unless block_given?
+  end
+
+  def postorder(node = @root, &block)
+    return if node.nil?
+
+    values = []
+    values << postorder(node.left_child, &block) unless node.left_child.nil?
+    values << postorder(node.right_child, &block) unless node.right_child.nil?
+    values << traverse(node, &block)
+    return values.flatten unless block_given?
+  end
+
   private
 
   def traverse(node, &block)

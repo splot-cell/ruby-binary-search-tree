@@ -31,3 +31,9 @@ pp tree.level_order_rec { |node| puts node.to_s }
 
 pp tree.inorder
 pp tree.inorder { |node| puts node.to_s }
+
+pp tree.preorder
+pp tree.preorder { |node| puts node.to_s }
+
+pp tree.postorder
+pp tree.postorder { |node| puts node.to_s }
