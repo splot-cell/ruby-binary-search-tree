@@ -39,3 +39,5 @@ puts tree.find(12).to_s
 # pp tree.postorder { |node| puts node.to_s }
 
 puts tree.height(tree.find(12))
+puts tree.depth(tree.find(12))
+puts tree.depth(tree.find(19))

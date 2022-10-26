@@ -144,6 +144,20 @@ class Tree
     max + 1
   end
 
+  def depth(node, current_node = @root)
+    return if current_node.nil? || node.nil?
+
+    count = 0
+
+    return count if node == current_node
+
+    count += 1
+
+    return count + depth(node, current_node.left_child) if node < current_node
+
+    count + depth(node, current_node.right_child)
+  end
+
   private
 
   # Helper function for handing traversal behaviour when no block given
