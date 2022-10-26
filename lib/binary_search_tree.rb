@@ -18,17 +18,17 @@ class Tree
     tree_root
   end
 
-  def insert(value, current_node = @root)
-    return Node.new(value) if current_node.nil?
+  def insert(value, node = @root)
+    return Node.new(value) if node.nil?
 
-    return current_node if value == current_node.data
+    return node if value == node.data
 
-    if value < current_node.data
-      current_node.left_child = insert(value, current_node.left_child)
+    if value < node.data
+      node.left_child = insert(value, node.left_child)
     else
-      current_node.right_child = insert(value, current_node.right_child)
+      node.right_child = insert(value, node.right_child)
     end
-    current_node
+    node
   end
 
   def delete(value)
@@ -49,14 +49,14 @@ class Tree
                  true)
   end
 
-  def find(value, current_node = @root)
-    return if current_node.nil?
+  def find(value, node = @root)
+    return if node.nil?
 
-    return current_node if value == current_node.data
+    return node if value == node.data
 
-    return find(value, current_node.left_child) if value < current_node.data
+    return find(value, node.left_child) if value < node.data
 
-    find(value, current_node.right_child)
+    find(value, node.right_child)
   end
 
   def level_order
@@ -106,30 +106,29 @@ class Tree
     block_given? ? block.call(node) : node.data
   end
 
-  def delete_node(value, current_node = @root)
-    return if current_node.nil?
+  def delete_node(value, node = @root)
+    return if node.nil?
 
-    if value < current_node.data
-      current_node.left_child = delete_node(value, current_node.left_child)
-    elsif value > current_node.data
-      current_node.right_child = delete_node(value, current_node.right_child)
+    if value < node.data
+      node.left_child = delete_node(value, node.left_child)
+    elsif value > node.data
+      node.right_child = delete_node(value, node.right_child)
     else
       # If current node has zero children, or only a right child
-      return current_node.right_child if current_node.left_child.nil?
+      return node.right_child if node.left_child.nil?
 
       # If current node has only a left child
-      return current_node.left_child if current_node.right_child.nil?
+      return node.left_child if node.right_child.nil?
 
       # If current node has 2 children
-      root_replacement = current_node.right_child.lowest_child_recur
-      # Only replacing the data in current_node with that of the node to be
+      root_replacement = node.right_child.lowest_child_recur
+      # Only replacing the data in node with that of the node to be
       # deleted saves replacing left_child and right_child (i.e. saves one
       # assignment) vs actually moving the Node object up the Tree
-      current_node.data = root_replacement.data
-      current_node.right_child = delete_node(root_replacement.data,
-                                             current_node.right_child)
+      node.data = root_replacement.data
+      node.right_child = delete_node(root_replacement.data, node.right_child)
     end
-    current_node
+    node
   end
 end
 
