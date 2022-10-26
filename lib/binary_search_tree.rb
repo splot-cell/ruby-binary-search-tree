@@ -59,14 +59,14 @@ class Tree
     find(value, node.right_child)
   end
 
-  def level_order
+  def level_order(&block)
     queue = []
     values = []
     current_node = @root
     until current_node.nil?
       queue << current_node.left_child unless current_node.left_child.nil?
       queue << current_node.right_child unless current_node.right_child.nil?
-      block_given? ? yield(current_node) : values << current_node.data
+      values << traverse(current_node, &block)
       current_node = queue.shift
     end
     values unless block_given?
