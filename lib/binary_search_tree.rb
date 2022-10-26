@@ -64,12 +64,26 @@ class Tree
     values = []
     current_node = @root
     until current_node.nil?
-      queue.push(current_node.left_child) unless current_node.left_child.nil?
-      queue.push(current_node.right_child) unless current_node.right_child.nil?
-      block_given? ? yield(current_node) : values.push(current_node.data)
+      queue << current_node.left_child unless current_node.left_child.nil?
+      queue << current_node.right_child unless current_node.right_child.nil?
+      block_given? ? yield(current_node) : values << current_node.data
       current_node = queue.shift
     end
     values unless block_given?
+  end
+
+  def level_order_rec(queue = [@root], &block)
+    return [] if queue.empty?
+
+    values = []
+    current_node = queue.shift
+    block_given? ? block.call(current_node) : values << current_node.data
+
+    queue << current_node.left_child unless current_node.left_child.nil?
+    queue << current_node.right_child unless current_node.right_child.nil?
+
+    values.concat(level_order_rec(queue, &block))
+    values
   end
 
   private
@@ -95,7 +109,7 @@ class Tree
       # assignment) vs actually moving the Node object up the Tree
       current_node.data = root_replacement.data
       current_node.right_child = delete_node(root_replacement.data,
-                                        current_node.right_child)
+                                             current_node.right_child)
     end
     current_node
   end
