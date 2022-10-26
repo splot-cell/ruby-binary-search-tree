@@ -82,8 +82,17 @@ class Tree
     queue << current_node.left_child unless current_node.left_child.nil?
     queue << current_node.right_child unless current_node.right_child.nil?
 
+    if block_given?
+      level_order_rec(queue, &block)
+      return
+    end
     values.concat(level_order_rec(queue, &block))
     values
+  end
+
+  def inorder(current_node = @root, &block)
+    return []
+
   end
 
   private
