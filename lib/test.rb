@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "./lib/binary_search_tree"
+require_relative "binary_search_tree"
+
+# This test file was used during development to drive the Tree class and ensure
+# functions behaved as expected. It is not a test suite.
 
 data = []
 20.times { data << rand(20) }
