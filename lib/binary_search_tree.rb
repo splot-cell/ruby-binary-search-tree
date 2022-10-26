@@ -77,17 +77,13 @@ class Tree
 
     values = []
     current_node = queue.shift
-    block_given? ? block.call(current_node) : values << current_node.data
+    values << traverse(current_node, &block)
 
     queue << current_node.left_child unless current_node.left_child.nil?
     queue << current_node.right_child unless current_node.right_child.nil?
 
-    if block_given?
-      level_order_rec(queue, &block)
-      return
-    end
-    values.concat(level_order_rec(queue, &block))
-    values
+    values << level_order_rec(queue, &block)
+    values.flatten unless block_given?
   end
 
   def inorder(node = @root, &block)

@@ -24,10 +24,10 @@ puts tree.find(9).to_s
 puts tree.find(12).to_s
 
 pp tree.level_order
-tree.level_order { |node| puts node.to_s }
+pp tree.level_order { |node| puts node.to_s }
 
 pp tree.level_order_rec
-tree.level_order_rec { |node| puts node.to_s }
+pp tree.level_order_rec { |node| puts node.to_s }
 
 pp tree.inorder
-tree.inorder { |node| puts node.to_s }
+pp tree.inorder { |node| puts node.to_s }
