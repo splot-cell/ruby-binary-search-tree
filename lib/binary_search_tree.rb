@@ -144,13 +144,18 @@ class Tree
     max + 1
   end
 
+  # Depth is number of edges in path from node to @root
+  # current_node parameter is used for recursive functionality only
   def depth(node, current_node = @root)
+    # Guard against node not being present in tree, or nil
     return if current_node.nil? || node.nil?
 
+    # If the current_node is the node, return zero
     count = 0
-
     return count if node == current_node
 
+    # If not, add one to the count, and then search the current_node's children,
+    # returning their depth plus the count
     count += 1
 
     return count + depth(node, current_node.left_child) if node < current_node
